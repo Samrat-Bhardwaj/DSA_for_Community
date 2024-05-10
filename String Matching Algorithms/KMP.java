@@ -15,7 +15,7 @@ public class KMP {
                 if(len == 0){
                     j++;
                 } else {
-                    len = lps[len-1];
+                    len = lps[len-1]; // this is actually saving our time
                 }
             }
         }

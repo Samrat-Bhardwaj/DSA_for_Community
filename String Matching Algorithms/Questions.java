@@ -1,17 +1,23 @@
 
 public class Questions {
-    public static int[] makeLPSArray(int[] patt, int m){
-        int[] lps = new int[m];
+    // leetcode 3036, 3034
+
+    // you shiould solve 3036, can skip 345
+    public int[] makeLPSArray(int[] pattern){
+        int m = pattern.length;
 
         int j = 1;
+        int len = 0;
+        int[] lps = new int[m];
+
         lps[0] = 0;
 
-        int len = 0;
         while(j<m){
-            if(patt[j] == patt[len]){
+            if(pattern[j] == pattern[len]){
                 len++;
                 lps[j] = len;
-                j++;
+
+                j++; 
             } else {
                 if(len == 0){
                     j++;
@@ -24,18 +30,17 @@ public class Questions {
         return lps;
     }
 
-    // leetcode 3036, 3034
     public int countMatchingSubarrays(int[] nums, int[] pattern) {
+        int[] lps = makeLPSArray(pattern); /// copy of KMP
         int m = pattern.length;
 
-        int[] lps = makeLPSArray(pattern, m);
+        int res = 0;
+        int i = 1;
+        int j = 0;
 
-        int i=1;
-        int j=0;
-        int ans = 0;
-
-        while(i<nums.length){
+        while(i < nums.length){
             int currChar = -2;
+
             if(nums[i] > nums[i-1]){
                 currChar = 1;
             } else if(nums[i] == nums[i-1]){
@@ -55,13 +60,13 @@ public class Questions {
                 }
             }
 
-            if(j==m){
-                ans++;
-                j=lps[j-1];
+            if(j==m){ // matching pattern
+                res++;
+                j = lps[j-1];
             }
         }
 
-        return ans;
+        return res;
     }
 
     // leet 3031, 3029
